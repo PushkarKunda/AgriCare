@@ -15,6 +15,15 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 ├── soil_images.zip                           # Compressed archive of soil report screenshots
 ├── soil_images/                              # Extracted soil report screenshots
 │
+├── Get_All_Images/                           # Bulk Satellite Image Patch Extraction & GEE Integration
+│   ├── download_sentinel2_images.py          # High-resolution (512x512) Sentinel-2 satellite image patch downloader via GEE
+│   ├── SPSR_Nellore_972_Points_2025_2026.kml # KML placemarks of soil sampling points (2025–2026)
+│   ├── SPSR_Nellore_972_Points_Sentinel2_Bands.csv # Extracted dataset with 12 Sentinel-2 bands & vegetation indices
+│   └── downloaded_images/                    # Downloaded PNG image crops & regional maps
+│       ├── point_crops_rgb/                  # 512x512 True Color (RGB) PNG image crops per point
+│       ├── point_crops_false_color/          # 512x512 False Color Infrared (CIR) PNG image crops per point
+│       └── regional_mosaics/                 # Regional NDVI overview map
+│
 ├── ExtractSentinal2images/                   # Sentinel-2 Satellite Multispectral Data Extraction
 │   ├── extract.py                            # Google Earth Engine (GEE) sampling task exporter
 │   ├── ms_extract.py                         # STAC & Rasterio extraction via Planetary Computer
@@ -61,6 +70,19 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 | **`extract_soil_data.py`** | Uses **Ollama** with local vision model (`llava`) to extract structured JSON data (Lat, Long, Village, N, P, K, OC) directly from screenshot images into `Soil_Test_Results_Ollama.xlsx`. |
 | **`extract_soil_ocr.py`** | High-precision extraction script using **EasyOCR** and **OpenCV** (image 2x upscaling, bounding box coordinate math, regex anchors) to parse 12 soil parameters (N, P, K, B, Fe, Zn, Cu, S, OC, pH, EC, Mn) and metadata into `Soil_Test_Results_209_Clean.xlsx`. |
 | **`test_ocr.py`** | Quick diagnostic script for testing EasyOCR bounding box detection and text extraction on sample report screenshots. |
+
+---
+
+### 📷 `Get_All_Images/` — Bulk Satellite Image Crop Downloader & GEE Integration
+
+| File / Folder | Purpose & Usage |
+| :--- | :--- |
+| **`download_sentinel2_images.py`** | High-resolution satellite downloader script integrated with **Google Earth Engine (GEE)**. Queries `COPERNICUS/S2_SR_HARMONIZED` collection (2025-01-01 to 2026-12-30), extracts 512×512 anti-aliased True-Color (RGB) and False-Color (CIR) PNG image crops per sampling point, samples 12 multispectral bands, computes vegetation indices (`NDVI`, `NDRE`, `EVI`, `SAVI`), and exports tabular CSV and regional NDVI map. |
+| **`SPSR_Nellore_972_Points_2025_2026.kml`** | KML input placemarks containing sampling point locations, coordinates, and soil property metadata across SPSR Nellore. |
+| **`SPSR_Nellore_972_Points_Sentinel2_Bands.csv`** | Processed CSV dataset containing sampling coordinates, soil parameters (N, P, K, OC), extracted 12 Sentinel-2 spectral reflectances, and computed vegetation indices. |
+| **`downloaded_images/point_crops_rgb/`** | Directory containing 512×512 pixel True Color RGB PNG image patches per sampling location. |
+| **`downloaded_images/point_crops_false_color/`** | Directory containing 512×512 pixel False Color Infrared (CIR) PNG image patches per sampling location. |
+| **`downloaded_images/regional_mosaics/`** | Directory storing regional coverage maps (`SPSR_Nellore_Regional_NDVI_Map.png`). |
 
 ---
 
@@ -118,8 +140,8 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 
 1. **Extract Data from Report Screenshots**:
    - Run `python extract_soil_ocr.py` (EasyOCR) or `python extract_soil_data.py` (Ollama LLaVA).
-2. **Geospatial & Satellite Extraction**:
-   - Run `python ExtractSentinal2images/ms_extract.py` to extract Sentinel-2 spectral bands.
+2. **Geospatial & Satellite Image Extraction**:
+   - Run `python Get_All_Images/download_sentinel2_images.py` to extract high-resolution 512×512 Sentinel-2 satellite crops and multispectral band values via Google Earth Engine.
    - Run `python ExtractSentinal2images/totalAreaCovered.py` to plot sampling area coverage.
 3. **KML Generation**:
    - Run `python KML_Files_Extract/getKML.py` to view sampling points in Google Earth Pro.
