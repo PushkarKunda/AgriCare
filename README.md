@@ -19,8 +19,9 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 │
 ├── ExtractDependencies/                      # Multi-Source Environmental & Geographic Covariate Extraction
 │   ├── extract_dependencies.py               # Earth Engine script extracting DEM, ERA5, TerraClimate & SoilGrids data
+│   ├── missing.py                            # Earth Engine script extracting TWI, Curvature, VPD, PET, Aridity & Integrated NDVI
 │   ├── SPSR_Nellore_972_Points_Sentinel2_Bands.csv # Input 972-point sampling coordinates & Sentinel-2 band dataset
-│   └── SPSR_Nellore_972_Points_Structured_Dataset.csv # Consolidated dataset with extracted environmental dependencies
+│   └── SPSR_Nellore_Final_Comprehensive_SCORPAN_Dataset.csv # Final SCORPAN dataset with all spectral & environmental dependencies
 │
 ├── Get_All_Images/                           # Bulk Satellite Image Patch Extraction & GEE Integration
 │   ├── download_sentinel2_images.py          # High-resolution (512x512) Sentinel-2 satellite image patch downloader via GEE
@@ -85,9 +86,10 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 
 | File | Purpose & Usage |
 | :--- | :--- |
-| **`extract_dependencies.py`** | Google Earth Engine script extracting multi-source environmental, topographic, climatic, and soil texture covariates for the 972 soil sampling points. Samples: **NASA SRTM DEM 30m** (Elevation, Slope, Aspect, Hillshade), **ECMWF ERA5-Land Reanalysis** (0-7cm Soil Moisture, Soil Temp, Land Surface Temp, Precipitation), **TerraClimate 4km** (Potential ET, Climate Water Deficit, Actual ET), and **ISRIC SoilGrids 250m** (Clay, Sand, Silt fractions 0-5cm). |
+| **`extract_dependencies.py`** | Google Earth Engine script extracting baseline environmental, topographic, climatic, and soil texture covariates for 972 sampling points. Samples: **NASA SRTM DEM 30m** (Elevation, Slope, Aspect, Hillshade), **ECMWF ERA5-Land Reanalysis** (Topsoil Moisture 0–7cm, Soil Temp, Land Surface Temp, Precipitation), **TerraClimate 4km** (Potential ET, Climate Water Deficit, Actual ET), and **ISRIC SoilGrids 250m** (Clay, Sand, Silt fractions 0–5cm). |
+| **`missing.py`** | Advanced Google Earth Engine script extracting complex SCORPAN environmental covariates: **Topographic Wetness Index (TWI proxy)**, **Terrain Curvature** (2nd spatial derivative via Laplacian kernel), **Vapor Pressure Deficit (VPD)** via Tetens equation, **Potential Evapotranspiration (PET)**, **Aridity Index**, and **Sentinel-2 Annual Cumulative Integrated NDVI**. Organizes columns into a logical non-alphabetical structure. |
 | **`SPSR_Nellore_972_Points_Sentinel2_Bands.csv`** | Input dataset with sampling coordinates, ground-truth soil health records, and 12 Sentinel-2 multispectral band reflectances for 972 points across SPSR Nellore. |
-| **`SPSR_Nellore_972_Points_Structured_Dataset.csv`** | Consolidated structured dataset containing matched soil targets, Sentinel-2 band reflectances, vegetation indices, and extracted environmental dependency covariates. |
+| **`SPSR_Nellore_Final_Comprehensive_SCORPAN_Dataset.csv`** | Final consolidated SCORPAN dataset containing ground-truth soil target nutrients (N, P, K, OC), 12 Sentinel-2 spectral reflectances, vegetation indices, annual cumulative NDVI, topography/curvature, hydrometeorology/climate (VPD, PET, Aridity Index), and soil texture. |
 
 ---
 
@@ -160,7 +162,8 @@ This repository contains an end-to-end data processing, Optical Character Recogn
    - Run `python extract_soil_ocr.py` (EasyOCR) or `python extract_soil_data.py` (Ollama LLaVA).
 2. **Geospatial & Satellite Image Extraction & Dependencies**:
    - Run `python Get_All_Images/download_sentinel2_images.py` to extract high-resolution 512×512 Sentinel-2 satellite crops and multispectral band values via Google Earth Engine.
-   - Run `python ExtractDependencies/extract_dependencies.py` to extract DEM topography (elevation, slope, aspect, hillshade), ERA5 topsoil moisture & temperature, TerraClimate evapotranspiration, and ISRIC SoilGrids texture dependencies.
+   - Run `python ExtractDependencies/extract_dependencies.py` to extract baseline DEM topography, ERA5 soil moisture & temperature, TerraClimate ET, and ISRIC SoilGrids texture dependencies.
+   - Run `python ExtractDependencies/missing.py` to extract advanced SCORPAN covariates (TWI, Terrain Curvature, VPD, PET, Aridity Index, Cumulative Integral NDVI) and output `SPSR_Nellore_Final_Comprehensive_SCORPAN_Dataset.csv`.
    - Run `python ExtractSentinal2images/totalAreaCovered.py` to plot sampling area coverage.
 3. **KML Generation**:
    - Run `python KML_Files_Extract/getKML.py` to view sampling points in Google Earth Pro.
