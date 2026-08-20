@@ -1,6 +1,6 @@
 # AgriCare / Soil Health & Geospatial Remote Sensing Data Pipeline
 
-This repository contains an end-to-end data processing, Optical Character Recognition (OCR), geospatial sampling, and machine learning pipeline for extracting soil test parameters (SPSR Nellore district) and correlating ground-truth soil health data with **Sentinel-2 Satellite Remote Sensing Imagery** using Google Earth Engine (GEE) and Microsoft Planetary Computer.
+This repository contains an end-to-end data processing, Optical Character Recognition (OCR), geospatial sampling, environmental covariate extraction, and machine learning pipeline for extracting soil test parameters (SPSR Nellore district) and correlating ground-truth soil health data with **Sentinel-2 Satellite Remote Sensing Imagery** and multi-source environmental datasets using Google Earth Engine (GEE) and Microsoft Planetary Computer.
 
 ---
 
@@ -14,6 +14,13 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 ├── Soil_Test_Results.xlsx                    # Processed soil test ground-truth dataset
 ├── soil_images.zip                           # Compressed archive of soil report screenshots
 ├── soil_images/                              # Extracted soil report screenshots
+├── test_crops/                               # Sample satellite image crops for pipeline testing
+│   └── raw_512.png                           # Sample 512x512 Sentinel-2 crop patch
+│
+├── ExtractDependencies/                      # Multi-Source Environmental & Geographic Covariate Extraction
+│   ├── extract_dependencies.py               # Earth Engine script extracting DEM, ERA5, TerraClimate & SoilGrids data
+│   ├── SPSR_Nellore_972_Points_Sentinel2_Bands.csv # Input 972-point sampling coordinates & Sentinel-2 band dataset
+│   └── SPSR_Nellore_972_Points_Structured_Dataset.csv # Consolidated dataset with extracted environmental dependencies
 │
 ├── Get_All_Images/                           # Bulk Satellite Image Patch Extraction & GEE Integration
 │   ├── download_sentinel2_images.py          # High-resolution (512x512) Sentinel-2 satellite image patch downloader via GEE
@@ -66,10 +73,21 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 | :--- | :--- |
 | **`soil_images/`** | Directory containing raw screenshot images of Soil Health Cards / soil test reports collected for SPSR Nellore district. |
 | **`soil_images.zip`** | Compressed ZIP archive of the `soil_images/` folder for backup and distribution. |
+| **`test_crops/`** | Directory containing sample 512×512 Sentinel-2 satellite crop images (`raw_512.png`) used for validating crop extraction. |
 | **`Soil_Test_Results.xlsx`** | Primary Excel spreadsheet containing processed soil test records (Latitude, Longitude, Village, District, N, P, K, OC, etc.). |
 | **`extract_soil_data.py`** | Uses **Ollama** with local vision model (`llava`) to extract structured JSON data (Lat, Long, Village, N, P, K, OC) directly from screenshot images into `Soil_Test_Results_Ollama.xlsx`. |
 | **`extract_soil_ocr.py`** | High-precision extraction script using **EasyOCR** and **OpenCV** (image 2x upscaling, bounding box coordinate math, regex anchors) to parse 12 soil parameters (N, P, K, B, Fe, Zn, Cu, S, OC, pH, EC, Mn) and metadata into `Soil_Test_Results_209_Clean.xlsx`. |
 | **`test_ocr.py`** | Quick diagnostic script for testing EasyOCR bounding box detection and text extraction on sample report screenshots. |
+
+---
+
+### 🌐 `ExtractDependencies/` — Multi-Source Environmental & Geographic Covariate Extraction
+
+| File | Purpose & Usage |
+| :--- | :--- |
+| **`extract_dependencies.py`** | Google Earth Engine script extracting multi-source environmental, topographic, climatic, and soil texture covariates for the 972 soil sampling points. Samples: **NASA SRTM DEM 30m** (Elevation, Slope, Aspect, Hillshade), **ECMWF ERA5-Land Reanalysis** (0-7cm Soil Moisture, Soil Temp, Land Surface Temp, Precipitation), **TerraClimate 4km** (Potential ET, Climate Water Deficit, Actual ET), and **ISRIC SoilGrids 250m** (Clay, Sand, Silt fractions 0-5cm). |
+| **`SPSR_Nellore_972_Points_Sentinel2_Bands.csv`** | Input dataset with sampling coordinates, ground-truth soil health records, and 12 Sentinel-2 multispectral band reflectances for 972 points across SPSR Nellore. |
+| **`SPSR_Nellore_972_Points_Structured_Dataset.csv`** | Consolidated structured dataset containing matched soil targets, Sentinel-2 band reflectances, vegetation indices, and extracted environmental dependency covariates. |
 
 ---
 
@@ -140,8 +158,9 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 
 1. **Extract Data from Report Screenshots**:
    - Run `python extract_soil_ocr.py` (EasyOCR) or `python extract_soil_data.py` (Ollama LLaVA).
-2. **Geospatial & Satellite Image Extraction**:
+2. **Geospatial & Satellite Image Extraction & Dependencies**:
    - Run `python Get_All_Images/download_sentinel2_images.py` to extract high-resolution 512×512 Sentinel-2 satellite crops and multispectral band values via Google Earth Engine.
+   - Run `python ExtractDependencies/extract_dependencies.py` to extract DEM topography (elevation, slope, aspect, hillshade), ERA5 topsoil moisture & temperature, TerraClimate evapotranspiration, and ISRIC SoilGrids texture dependencies.
    - Run `python ExtractSentinal2images/totalAreaCovered.py` to plot sampling area coverage.
 3. **KML Generation**:
    - Run `python KML_Files_Extract/getKML.py` to view sampling points in Google Earth Pro.
