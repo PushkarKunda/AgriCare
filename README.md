@@ -12,14 +12,16 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 │   ├── discover_all_wms_soil_data.py         # District-wide WMS grid discovery scanner for all 3 cycles
 │   ├── query_soil_wms.py                     # WMS GetFeatureInfo extractor for coordinate lists
 │   ├── split_soil_data_by_year.py            # Utility to filter & split discovery datasets by year
+│   ├── verify_sample_with_shc.py             # Interactive live verification tool against official GeoServer
 │   ├── nellore_discovered_actual_soil_data_20260820_213144.csv # Consolidated 3-year raw discovery dataset
 │   ├── nellore_lat_long_2025_26.csv          # 974-point reference coordinate dataset
 │   └── 3yearscsv/                            # Filtered & deep-scanned year-wise soil health CSVs
-│       ├── find_more_2023_2024_records.py    # High-concurrency WMS scanner for 2023–24 layer
-│       ├── find_more_2024-2025_records.py    # High-concurrency WMS scanner for 2024–25 layer
+│       ├── find_more_2023_2024_records.py    # Robust high-concurrency WMS scanner for 2023–24 layer
+│       ├── find_more_2024-2025_records.py    # Robust high-concurrency WMS scanner for 2024–25 layer
+│       ├── find_more_2025-2026_records.py    # Robust high-concurrency WMS scanner for 2025–26 layer
 │       ├── nellore_soil_data_2023-24.csv     # Extracted 2023–2024 soil health dataset (1,555 records)
 │       ├── nellore_soil_data_2024-25.csv     # Extracted 2024–2025 soil health dataset (4,875 records)
-│       └── nellore_soil_data_2025-26.csv     # Extracted 2025–2026 soil health dataset (653 records)
+│       └── nellore_soil_data_2025-26.csv     # Extracted 2025–2026 soil health dataset (2,614 records)
 │
 ├── extract_soil_data.py                      # LLM-based (Ollama/LLaVA) OCR extraction script
 ├── extract_soil_ocr.py                       # EasyOCR & OpenCV precision extraction script
@@ -83,19 +85,21 @@ This repository contains an end-to-end data processing, Optical Character Recogn
 
 ### 🌾 `3_years_data/` & `3_years_data/3yearscsv/` — Multi-Year GeoServer WMS Discovery
 
-This module extracts and organizes direct ground-truth soil health measurements across three distinct testing cycles (**2023–24**, **2024–25**, and **2025–26**) for SPSR Nellore District directly from the SLUSI GeoServer WMS layers (`28_515_shc_2023-24`, `28_515_shc_2024-25`, `28_515_shc_2025-26`).
+This module extracts, organizes, and verifies direct ground-truth laboratory soil test measurements across three testing cycles (**2023–24**, **2024–25**, and **2025–26**) for SPSR Nellore District directly from the official Government of India Soil Health Card (SHC) GeoServer WMS layers (`28_515_shc_2023-24`, `28_515_shc_2024-25`, `28_515_shc_2025-26`).
 
 | File / Folder | Purpose & Usage |
 | :--- | :--- |
 | **`3_years_data/discover_all_wms_soil_data.py`** | Scans the district bounding box (`14.12°N`–`15.30°N`, `79.36°E`–`80.18°E`) across all 3 cycles simultaneously, identifying GeoServer feature IDs, coordinates, village names, and multi-nutrient test results. |
 | **`3_years_data/query_soil_wms.py`** | Queries GeoServer WMS `GetFeatureInfo` at designated latitude/longitude coordinate lists. |
-| **`3_years_data/split_soil_data_by_year.py`** | Automatically separates multi-cycle discovery CSVs into distinct, standardized year-wise CSV files with clean parameter column names (`nitrogen_N`, `phosphorus_P`, `potassium_K`, `organic_carbon_OC`, `pH`, `EC`, `sulphur_S`, `zinc_Zn`, `iron_Fe`, `copper_Cu`, `manganese_Mn`, `boron_B`). |
+| **`3_years_data/split_soil_data_by_year.py`** | Automatically separates multi-cycle discovery CSVs into distinct, standardized year-wise CSV files with clean parameter column names. |
+| **`3_years_data/verify_sample_with_shc.py`** | Interactive verification script that queries the official government GeoServer live to confirm that any CSV row matches the server's ground truth 1:1. |
 | **`3_years_data/nellore_discovered_actual_soil_data_20260820_213144.csv`** | Consolidated discovery file containing 2,348 multi-year feature points. |
-| **`3_years_data/3yearscsv/find_more_2023_2024_records.py`** | High-concurrency parallel WMS scanner specifically probing the **2023–24 layer** (`28_515_shc_2023-24`) across 50,000+ district grid points. |
-| **`3_years_data/3yearscsv/find_more_2024-2025_records.py`** | High-concurrency parallel WMS scanner specifically probing the **2024–25 layer** (`28_515_shc_2024-25`) across 50,000+ district grid points. |
-| **`3_years_data/3yearscsv/nellore_soil_data_2023-24.csv`** | **1,555** actual ground-truth soil health records for cycle **2023–2024**. |
-| **`3_years_data/3yearscsv/nellore_soil_data_2024-25.csv`** | **4,875** actual ground-truth soil health records for cycle **2024–2025**. |
-| **`3_years_data/3yearscsv/nellore_soil_data_2025-26.csv`** | **653** actual ground-truth soil health records for cycle **2025–2026**. |
+| **`3_years_data/3yearscsv/find_more_2023_2024_records.py`** | High-concurrency parallel WMS scanner probing the **2023–24 layer** (`28_515_shc_2023-24`) across 50,000+ district grid points. |
+| **`3_years_data/3yearscsv/find_more_2024-2025_records.py`** | High-concurrency parallel WMS scanner probing the **2024–25 layer** (`28_515_shc_2024-25`) across 50,000+ district grid points. |
+| **`3_years_data/3yearscsv/find_more_2025-2026_records.py`** | High-concurrency parallel WMS scanner probing the **2025–26 layer** (`28_515_shc_2025-26`) across 50,000+ district grid points. |
+| **`3_years_data/3yearscsv/nellore_soil_data_2023-24.csv`** | **1,555** actual ground-truth soil health records for cycle **2023–2024** (`Latitude`, `Longitude`, `Feature_ID`, `Village`, `N`, `P`, `K`, `OC`). |
+| **`3_years_data/3yearscsv/nellore_soil_data_2024-25.csv`** | **4,875** actual ground-truth soil health records for cycle **2024–2025** (`Latitude`, `Longitude`, `Feature_ID`, `Village`, `N`, `P`, `K`, `OC`). |
+| **`3_years_data/3yearscsv/nellore_soil_data_2025-26.csv`** | **2,614** actual ground-truth soil health records for cycle **2025–2026** (`Latitude`, `Longitude`, `Feature_ID`, `Village`, `N`, `P`, `K`, `OC`). |
 
 ---
 
@@ -192,7 +196,12 @@ This module extracts and organizes direct ground-truth soil health measurements 
 1. **Multi-Year Direct WMS Soil Data Extraction**:
    - Run `python 3_years_data/discover_all_wms_soil_data.py` to scan district boundary across cycles.
    - Run `python 3_years_data/split_soil_data_by_year.py` to split results into 3 year-specific CSV files.
-   - Run `python 3_years_data/3yearscsv/find_more_2023_2024_records.py` or `find_more_2024-2025_records.py` to deep-scan specific layers.
+   - Deep-scan specific layers:
+     - `python 3_years_data/3yearscsv/find_more_2023_2024_records.py`
+     - `python 3_years_data/3yearscsv/find_more_2024-2025_records.py`
+     - `python 3_years_data/3yearscsv/find_more_2025-2026_records.py`
+   - Verify ground-truth live against official server:
+     - `python 3_years_data/verify_sample_with_shc.py 2024-25 1`
 2. **Extract Data from Report Screenshots**:
    - Run `python extract_soil_ocr.py` (EasyOCR) or `python extract_soil_data.py` (Ollama LLaVA).
 3. **Geospatial & Satellite Image Extraction & Dependencies**:
