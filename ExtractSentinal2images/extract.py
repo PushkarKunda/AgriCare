@@ -3,7 +3,7 @@ import pandas as pd
 
 # Initialize Earth Engine
 ee.Authenticate()  # Optional if already authenticated
-ee.Initialize(project='resolute-winter-482113-g5')
+ee.Initialize(project='sentinal2-505019')
 
 # Load Coordinates from Excel
 df = pd.read_excel('Soil_Test_Results.xlsx').dropna(

@@ -13,7 +13,7 @@ def log(msg):
 
 def init_gee():
     log("[*] Initializing Google Earth Engine (GEE)...")
-    project_id = 'resolute-winter-482113-g5'
+    project_id = 'sentinal2-505019'
     try:
         ee.Initialize(project=project_id)
         log(f"[+] Successfully initialized Google Earth Engine with project '{project_id}'!")
