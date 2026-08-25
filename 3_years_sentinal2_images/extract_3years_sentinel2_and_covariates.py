@@ -181,6 +181,21 @@ def process_year_dataset(year, csv_path, output_dir):
         time.sleep(0.2)
         
     result_df = pd.DataFrame(extracted_records)
+    
+    # Reorder columns logically: Location -> Soil Targets -> S2 Bands -> Indices -> Topo -> Climate -> Soil Texture
+    order_pref = [
+        'Village', 'Latitude', 'Longitude', 'Feature_ID',
+        'N', 'P', 'K', 'OC',
+        'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B11', 'B12',
+        'NDVI', 'NDRE', 'EVI', 'SAVI', 'SWIR_Ratio',
+        'Elevation_m', 'Slope_deg', 'Aspect_deg', 'Hillshade',
+        'Soil_Moisture_0_7cm', 'Soil_Temp_0_7cm_K', 'LST_K', 'Precipitation_Mean_m',
+        'Potential_ET', 'Actual_ET', 'Climate_Water_Deficit',
+        'Clay_Fraction_g_kg', 'Silt_Fraction_g_kg', 'Sand_Fraction_g_kg'
+    ]
+    ordered_cols = [c for c in order_pref if c in result_df.columns] + [c for c in result_df.columns if c not in order_pref]
+    result_df = result_df[ordered_cols]
+    
     output_csv = os.path.join(output_dir, f"nellore_sentinel2_scorpan_{year}.csv")
     result_df.to_csv(output_csv, index=False)
     log(f"[SUCCESS] Exported {len(result_df)} points with {len(result_df.columns)} features to:")
