@@ -48,11 +48,13 @@ c:\Users\t7907\OneDrive\Desktop\Final_Year_Project\Getting Data From images\
 │   ├── y_targets.csv                  # Ground-truth targets (N, P, K, OC)
 │   ├── feature_correlation_heatmap.png # Publication correlation matrix
 │   ├── pca_scree_plot.png             # PCA Scree plot (cumulative explained variance)
-│   └── pca_loadings_heatmap.png       # PCA eigenvector loadings heatmap
+│   ├── pca_loadings_heatmap.png       # PCA eigenvector loadings heatmap
+│   └── selection_results/             # Feature importance, SHAP plots & ablation curves
 │
 ├── 04_Model_Validation/               # Stage 4: Multi-Temporal Validation & Domain Adaptation
 │   ├── multi_year_soil_pipeline.py    # Multi-temporal cross-cycle pipeline (2-yr train, 1-yr test)
 │   ├── seasonal_calibration.py        # Few-shot domain adaptation engine (N=25 anchors)
+│   ├── baseline_models/               # Initial exploratory models (PLSR, Ridge, ElasticNet)
 │   └── results/                       # Validation plots, metrics CSVs & predictions
 │       ├── predictions_2025_2026.csv
 │       ├── temporal_validation_metrics.csv
@@ -66,20 +68,22 @@ c:\Users\t7907\OneDrive\Desktop\Final_Year_Project\Getting Data From images\
 │       └── few_shot_calibration_impact.png
 │
 ├── 05_Production_Models/              # Stage 5: Dual-Head ExtraTrees Models & Inference
-│   ├── train_dual_head_models.py      # Dual-head trainer (Regressors + ICAR Classifiers)
+│   ├── train_dual_head_models.py      # Hybrid Dual-Head trainer (VotingRegressor + ICAR Classifiers)
 │   ├── predict_soil.py                # Standalone CLI predictor (Continuous + Class + Confidence)
 │   ├── forecast_2026_2027.py          # 2026–2027 forecasting & ANGRAU fertilizer advisory
 │   ├── sample_input_template.csv      # Sample 39-feature input template
-│   ├── model_metadata.json            # Model schema, 45 features, metrics
+│   ├── model_metadata.json            # Model schema, 47 features, metrics
 │   ├── cross_validation_metrics_39_features.csv # 5-fold CV metrics table
 │   ├── imputer.joblib                 # Serialized median imputer
 │   ├── scaler.joblib                  # Serialized standard scaler
-│   ├── et_model_*.joblib              # Continuous ExtraTrees regressors (N, P, K, OC)
+│   ├── et_model_*.joblib              # Hybrid continuous regressors (VotingRegressor: 70% ET + 30% GBDT)
 │   ├── rf_model_*.joblib              # Backward-compatible regressors
 │   └── clf_model_*.joblib             # Dedicated ICAR fertility classifiers (Low/Med/High)
 │
+├── .gitignore                         # Comprehensive ignore rules for Python ML & OS caches
 ├── predict.py                         # Root-level fast inference runner
-└── README.md                          # Master documentation & project architecture
+├── README.md                          # Master documentation & architecture guide
+└── requirements.txt                   # Core Python package dependencies
 ```
 
 ---
@@ -87,7 +91,7 @@ c:\Users\t7907\OneDrive\Desktop\Final_Year_Project\Getting Data From images\
 ## 🚀 Quick Start Guide
 
 ### 1. Instant Soil Nutrient Prediction (from Root)
-Runs the dual-head ExtraTrees production model on any input CSV containing the standard 39 SCORPAN features:
+Runs the dual-head hybrid production model on any input CSV containing the standard 39 SCORPAN features:
 
 ```powershell
 # Run with sample template
@@ -100,9 +104,9 @@ python predict.py path/to/your_input_features.csv
 **Output Example**:
 ```text
   Latitude  Longitude  Predicted_N_kg/ha ICAR_Rating_N  Confidence_N_%  Predicted_P_kg/ha ICAR_Rating_P  Confidence_P_%
- 14.171091  79.555352              52.88           Low          100.0%              56.30          High           85.9%
- 15.298906  79.883129             126.60           Low           90.0%              21.49        Medium           89.4%
- 14.771594  79.720251             126.62           Low           99.6%               1.80           Low           90.8%
+ 14.171091  79.555352              57.77           Low          100.0%              58.37          High           89.4%
+ 15.298906  79.883129             125.14           Low           91.6%              21.16        Medium           90.6%
+ 14.771594  79.720251             125.52           Low           99.2%               1.80           Low           93.4%
 ```
 
 ---
@@ -117,7 +121,7 @@ python 05_Production_Models/forecast_2026_2027.py --crop Paddy
 ---
 
 ### 3. Retrain Dual-Head Production Models
-Retrains the continuous regressors (`ExtraTreesRegressor`) and dedicated classifiers (`ExtraTreesClassifier`) across all 909 ground-truth soil points:
+Retrains the hybrid regressors (`VotingRegressor`: ExtraTrees + GradientBoosting) and dedicated classifiers (`ExtraTreesClassifier`) across all 909 ground-truth soil points:
 
 ```powershell
 python 05_Production_Models/train_dual_head_models.py
@@ -136,16 +140,16 @@ python 04_Model_Validation/seasonal_calibration.py
 
 ## 📊 Model Performance & Accuracies (5-Fold Cross-Validation)
 
-| Nutrient | Variance Explained ($R^2$) | Pearson Correlation ($r$) | Normalized Accuracy ($1 - \text{NRMSE}$) | **ICAR Fertility Class Accuracy** | Safe-Tier Agreement | Agronomic Tolerance ($\le \pm 15\%$) |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Nitrogen ($N$)** | **$0.5962$** | **$0.7731$** | **$88.25\%$** | **$96.92\%$** | **$100.0\%$** | **$80.53\%$** |
-| **Phosphorus ($P$)** | **$0.2935$** | **$0.5660$** | **$95.01\%$** | **$70.63\%$** | **$93.95\%$** | **$98.35\%$** |
-| **Potassium ($K$)** | **$0.6876$** | **$0.8390$** | **$85.03\%$** | **$78.22\%$** | **$96.04\%$** | **$79.76\%$** |
-| **Organic Carbon ($OC$)**| **$0.2968$** | **$0.5478$** | **$93.58\%$** | **$86.91\%$** | **$96.26\%$** | **$96.48\%$** |
+| Nutrient | Variance Explained ($R^2$) | Pearson Correlation ($r$) | Normalized Accuracy ($1 - \text{NRMSE}$) | **ICAR Fertility Class Accuracy** | Safe-Tier Agreement |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Nitrogen ($N$)** | **$0.6081$** | **$0.7816$** | **$86.03\%$** | **$96.92\%$** | **$100.0\%$** |
+| **Phosphorus ($P$)** | **$0.4093$** *(+39.4%)* | **$0.6696$** | **$87.65\%$** | **$71.18\%$** | **$94.50\%$** |
+| **Potassium ($K$)** | **$0.6896$** | **$0.8420$** *(84.2% corr)* | **$84.47\%$** | **$79.32\%$** | **$96.37\%$** |
+| **Organic Carbon ($OC$)**| **$0.3757$** *(+27.7%)* | **$0.6131$** | **$85.70\%$** | **$87.13\%$** | **$96.48\%$** |
 
 ---
 
-## 🔬 SCORPAN Feature Categories (45 Total Derived Features)
+## 🔬 SCORPAN Feature Categories (47 Total Derived Features)
 
 1. **Sentinel-2 Multispectral Reflectance (12 bands)**: `B1`, `B2`, `B3`, `B4`, `B5`, `B6`, `B7`, `B8`, `B8A`, `B9`, `B11`, `B12`
 2. **Remote Sensing Spectral Indices (8 indices)**: `NDVI`, `NDRE`, `EVI`, `SAVI`, `Cumulative_Integral_NDVI`, `BSI`, `Clay_Ratio`, `OC_Index`
@@ -154,68 +158,6 @@ python 04_Model_Validation/seasonal_calibration.py
 5. **Soil Texture & Spatial Coordinates (5 features)**: `Clay_Fraction_g_kg`, `Sand_Fraction_g_kg`, `Silt_Fraction_g_kg`, `Latitude`, `Longitude`
 6. **Physical Domain Interactions (3 features)**: `Clay_x_Moisture`, `Temp_x_VPD`, `BSI_div_NDVI`
 7. **Spatial Trend Geomorphometry (3 features)**: `Spatial_Lat2`, `Spatial_Lon2`, `Spatial_Lat_Lon`
+8. **Soil-Terrain Physical Hydrology (2 features)**: `Clay_x_Elevation`, `Moisture_div_Slope`
 
-<<<<<<< HEAD
-*(Note: The user only inputs the 39 base features. All interaction terms and spatial trend features are engineered automatically inside the pipeline).*
-=======
----
-
-### 🗺️ `KML_Files_Extract/` — KML Generation & Google Earth Integration
-
-| File | Purpose & Usage |
-| :--- | :--- |
-| **`cordinatesConvert.py`** | Converts `Soil_Test_Results.xlsx` records into a Google Earth KML file (`soil_samples.kml`) using the `simplekml` library. |
-| **`getKML.py`** | Generates a formatted KML document (`SPSR_Nellore_972_Points_2025_2026.kml`) with temporal `<TimeSpan>` elements (2025-01-01 to 2026-12-30) and formatted HTML popup tables for Google Earth Pro time slider visualization. |
-| **`SPSR_Nellore_972_Points_2025_2026.kml`** | Output KML file configured with temporal range metadata and custom placemark icons. |
-| **`soil_samples.kml`** | KML file generated by `cordinatesConvert.py`. |
-| **`Soil_Test_Results.csv`** / **`.xlsx`** | Input data files containing sample points and soil parameters. |
-
----
-
-### 🤖 `Train_Model/` — Machine Learning & Spectro-Agronomic Modeling
-
-| File | Purpose & Usage |
-| :--- | :--- |
-| **`train_gee_models.py`** | Trains regression models (**Partial Least Squares Regression (PLSR)**, **RidgeCV**, **ElasticNetCV**) using 5-Fold Cross-Validation on Sentinel-2 bands (`B1`–`B12`) and calculated indices (`NDVI`, `NDRE`, `SAVI`, `EVI`, `SWIR_Ratio`) to predict soil nutrients (N, P, K, OC). |
-| **`rmse.py`** | Evaluates model performance across all soil targets using 5-fold cross-validation, computing **$R^2$**, **RMSE**, and **MAE**. Saves results to `Comprehensive_Model_Metrics.csv`. |
-| **`sample.py`** | Performs 5-fold cross-validated PLSR modeling for log-transformed Phosphorus (`log(1 + P)`) and generates an actual vs. predicted scatter plot saved as `Phosphorus_PLSR_Predictions.png`. |
-| **`Sentinel2_Bands_SoilData.csv`** | Training dataset containing Sentinel-2 spectral reflectance bands matched with soil test ground-truth values. |
-| **`Comprehensive_Model_Metrics.csv`** | Table summarizing cross-validated performance metrics ($R^2$, RMSE) across PLSR, Ridge, and ElasticNet models. |
-| **`Phosphorus_PLSR_Predictions.png`** | Scatter plot graph comparing predicted vs. actual Phosphorus values with a 1:1 ideal reference line. |
-
----
-
-## ⚡ Quick Start Workflow
-
-1. **Multi-Year Direct WMS Soil Data Extraction**:
-   - Run `python 3_years_data/discover_all_wms_soil_data.py` to scan district boundary across cycles.
-   - Run `python 3_years_data/split_soil_data_by_year.py` to split results into 3 year-specific CSV files.
-   - Deep-scan specific layers:
-     - `python 3_years_data/3yearscsv/find_more_2023_2024_records.py`
-     - `python 3_years_data/3yearscsv/find_more_2024-2025_records.py`
-     - `python 3_years_data/3yearscsv/find_more_2025-2026_records.py`
-   - Verify ground-truth live against official server:
-     - `python 3_years_data/verify_sample_with_shc.py 2024-25 1`
-2. **Extract Data from Report Screenshots**:
-   - Run `python extract_soil_ocr.py` (EasyOCR) or `python extract_soil_data.py` (Ollama LLaVA).
-3. **Geospatial & Satellite Image Extraction & Dependencies**:
-   - Run `python Get_All_Images/download_sentinel2_images.py` to extract high-resolution 512×512 Sentinel-2 satellite crops and multispectral band values via Google Earth Engine.
-   - Run `python ExtractDependencies/extract_dependencies.py` to extract baseline DEM topography, ERA5 soil moisture & temperature, TerraClimate ET, and ISRIC SoilGrids texture dependencies.
-   - Run `python ExtractDependencies/missing.py` to extract advanced SCORPAN covariates (TWI, Terrain Curvature, VPD, PET, Aridity Index, Cumulative Integral NDVI) and output `SPSR_Nellore_Final_Comprehensive_SCORPAN_Dataset.csv`.
-   - Run `python ExtractSentinal2images/totalAreaCovered.py` to plot sampling area coverage.
-4. **KML Generation**:
-   - Run `python KML_Files_Extract/getKML.py` to view sampling points in Google Earth Pro.
-5. **Machine Learning Model Training**:
-   - Run `python Train_Model/rmse.py` to evaluate PLSR, Ridge, and ElasticNet predictive models.
-6. **Feature Engineering & Dimensionality Reduction**:
-   - Run `python feature_engineering.py` to compute domain-specific spectral indices (BSI, NDVI, SAVI, NDRE, Clay Ratio, Custom OC Index), cyclical aspect transformations, and generate two distinct feature representations:
-     - **Branch A (All Features)**: `engineered_features/X_all_features.csv`
-     - **Branch B (PCA Components $\ge 95\%$ variance)**: `engineered_features/X_pca_features.csv`
-     - Outputs visual figures: `pca_scree_plot.png`, `pca_loadings_heatmap.png`, and `feature_correlation_heatmap.png`.
-7. **Feature Selection & Incremental Ablation Testing**:
-   - Run `python feature_selection_and_ablation.py` to execute:
-     - Supervised Random Forest MDI & SHAP feature importance per nutrient (N, P, K, OC).
-     - Recursive Feature Elimination (RFE) rankings.
-     - Incremental Covariate Grouping ablation curves (grounded in Zayani et al. & Suleymanov et al.).
-     - 3-Paradigm cross-validated performance benchmarking saved in `selection_results/`.
->>>>>>> c89b9421ff433c75c4853101871013a8d0be48cd
+*(Note: The user only inputs the 39 base features. All interaction, spatial, and hydrology features are derived automatically inside the pipeline).*

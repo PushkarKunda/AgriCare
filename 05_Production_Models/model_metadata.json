@@ -2,7 +2,7 @@
   "project": "MBU Digital Soil Nutrient Mapping",
   "district": "SPSR Nellore, Andhra Pradesh",
   "training_samples": 909,
-  "total_features": 45,
+  "total_features": 47,
   "base_features": 39,
   "feature_categories": {
     "Sentinel-2 Multispectral Bands (12)": [
@@ -63,6 +63,10 @@
       "Spatial_Lat2",
       "Spatial_Lon2",
       "Spatial_Lat_Lon"
+    ],
+    "Soil-Terrain Hydrology (2)": [
+      "Clay_x_Elevation",
+      "Moisture_div_Slope"
     ]
   },
   "feature_names_in_order": [
@@ -110,7 +114,9 @@
     "BSI_div_NDVI",
     "Spatial_Lat2",
     "Spatial_Lon2",
-    "Spatial_Lat_Lon"
+    "Spatial_Lat_Lon",
+    "Clay_x_Elevation",
+    "Moisture_div_Slope"
   ],
   "base_feature_names": [
     "B1",
@@ -168,60 +174,60 @@
     "P",
     "K"
   ],
-  "regressor_architecture": "ExtraTreesRegressor (n_estimators=450, max_depth=16, min_samples_leaf=2, max_features=0.65)",
-  "classifier_architecture": "ExtraTreesClassifier (n_estimators=400, max_depth=14, min_samples_leaf=2, max_features=0.65)",
+  "regressor_architecture": "VotingRegressor (70% ExtraTrees + 30% GradientBoosting)",
+  "classifier_architecture": "ExtraTreesClassifier (n_estimators=450, max_depth=14)",
   "cv_performance": [
     {
       "Target": "N",
-      "Features_Count": 45,
-      "CV_R2_Score": 0.5962,
-      "Pearson_r": 0.7731,
-      "Normalized_Accuracy_%": 88.25,
+      "Features_Count": 47,
+      "CV_R2_Score": 0.6081,
+      "Pearson_r": 0.7816,
+      "Normalized_Accuracy_%": 86.03,
       "ICAR_Class_Accuracy_%": 96.92,
       "Safe_Tier_Agreement_%": 100.0,
-      "Agronomic_Tolerance_%": 80.53,
-      "RMSE": 49.805,
-      "MAE": 35.647,
-      "RPD": 1.574
+      "Agronomic_Tolerance_%": 74.15,
+      "RMSE": 48.743,
+      "MAE": 35.583,
+      "RPD": 1.597
     },
     {
       "Target": "P",
-      "Features_Count": 45,
-      "CV_R2_Score": 0.2935,
-      "Pearson_r": 0.566,
-      "Normalized_Accuracy_%": 95.01,
-      "ICAR_Class_Accuracy_%": 70.63,
-      "Safe_Tier_Agreement_%": 93.95,
-      "Agronomic_Tolerance_%": 98.35,
-      "RMSE": 27.091,
-      "MAE": 10.867,
-      "RPD": 1.19
+      "Features_Count": 47,
+      "CV_R2_Score": 0.4093,
+      "Pearson_r": 0.6696,
+      "Normalized_Accuracy_%": 87.65,
+      "ICAR_Class_Accuracy_%": 71.18,
+      "Safe_Tier_Agreement_%": 94.5,
+      "Agronomic_Tolerance_%": 88.78,
+      "RMSE": 20.752,
+      "MAE": 10.442,
+      "RPD": 1.301
     },
     {
       "Target": "K",
-      "Features_Count": 45,
-      "CV_R2_Score": 0.6876,
-      "Pearson_r": 0.839,
-      "Normalized_Accuracy_%": 85.03,
-      "ICAR_Class_Accuracy_%": 78.22,
-      "Safe_Tier_Agreement_%": 96.04,
-      "Agronomic_Tolerance_%": 79.76,
-      "RMSE": 94.926,
-      "MAE": 56.263,
-      "RPD": 1.789
+      "Features_Count": 47,
+      "CV_R2_Score": 0.6896,
+      "Pearson_r": 0.842,
+      "Normalized_Accuracy_%": 84.47,
+      "ICAR_Class_Accuracy_%": 79.32,
+      "Safe_Tier_Agreement_%": 96.37,
+      "Agronomic_Tolerance_%": 79.1,
+      "RMSE": 94.574,
+      "MAE": 57.041,
+      "RPD": 1.795
     },
     {
       "Target": "OC",
-      "Features_Count": 45,
-      "CV_R2_Score": 0.2968,
-      "Pearson_r": 0.5478,
-      "Normalized_Accuracy_%": 93.58,
-      "ICAR_Class_Accuracy_%": 86.91,
-      "Safe_Tier_Agreement_%": 96.26,
-      "Agronomic_Tolerance_%": 96.48,
-      "RMSE": 0.191,
-      "MAE": 0.11,
-      "RPD": 1.193
+      "Features_Count": 47,
+      "CV_R2_Score": 0.3757,
+      "Pearson_r": 0.6131,
+      "Normalized_Accuracy_%": 85.7,
+      "ICAR_Class_Accuracy_%": 87.13,
+      "Safe_Tier_Agreement_%": 96.48,
+      "Agronomic_Tolerance_%": 81.63,
+      "RMSE": 0.166,
+      "MAE": 0.107,
+      "RPD": 1.266
     }
   ]
 }

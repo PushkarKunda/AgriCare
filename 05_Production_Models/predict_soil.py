@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-MBU Digital Soil Mapping - Standalone Dual-Head Predictor
-Loads trained ExtraTrees Regressors and ICAR Classifiers.
+MBU Digital Soil Mapping - Standalone Dual-Head Predictor (Hybrid Architecture)
+Loads trained Hybrid Regressors (VotingRegressor) and ICAR Classifiers.
 Outputs both continuous nutrient quantities (kg/ha, %) AND official ICAR fertility classes with confidence scores.
 """
 
@@ -41,7 +41,7 @@ for t in TARGETS:
         CLF_MODELS[t] = joblib.load(clf_path)
 
 def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
-    """Ensures spectral indices, aspect sin/cos, domain interactions, and spatial trend terms are computed."""
+    """Ensures spectral indices, aspect sin/cos, domain interactions, spatial trends, and hydrology features are computed."""
     res = df.copy()
     eps = 1e-6
     if 'BSI' not in res.columns and all(b in res.columns for b in ['B11', 'B4', 'B8', 'B2']):
@@ -56,7 +56,7 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
         res['Aspect_Sin'] = np.sin(rad)
         res['Aspect_Cos'] = np.cos(rad)
 
-    # Physical Domain Interactions
+    # 1. Physical Domain Interactions
     if 'Clay_x_Moisture' not in res.columns and all(c in res.columns for c in ['Clay_Fraction_g_kg', 'Soil_Moisture_0_7cm']):
         res['Clay_x_Moisture'] = res['Clay_Fraction_g_kg'] * res['Soil_Moisture_0_7cm']
     if 'Temp_x_VPD' not in res.columns and all(c in res.columns for c in ['Soil_Temp_0_7cm_K', 'VPD_kpa']):
@@ -64,13 +64,19 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     if 'BSI_div_NDVI' not in res.columns and all(c in res.columns for c in ['BSI', 'NDVI']):
         res['BSI_div_NDVI'] = res['BSI'] / (np.abs(res['NDVI']) + 0.05)
 
-    # Spatial Trend Geomorphometry
+    # 2. Spatial Trend Geomorphometry
     if 'Spatial_Lat2' not in res.columns and all(c in res.columns for c in ['Latitude', 'Longitude']):
         lat_c = res['Latitude'] - 14.6642
         lon_c = res['Longitude'] - 79.7775
         res['Spatial_Lat2'] = lat_c ** 2
         res['Spatial_Lon2'] = lon_c ** 2
         res['Spatial_Lat_Lon'] = lat_c * lon_c
+
+    # 3. Soil-Terrain Physical Hydrology
+    if 'Clay_x_Elevation' not in res.columns and all(c in res.columns for c in ['Clay_Fraction_g_kg', 'Elevation_m']):
+        res['Clay_x_Elevation'] = res['Clay_Fraction_g_kg'] * res['Elevation_m']
+    if 'Moisture_div_Slope' not in res.columns and all(c in res.columns for c in ['Soil_Moisture_0_7cm', 'Slope_deg']):
+        res['Moisture_div_Slope'] = res['Soil_Moisture_0_7cm'] / (res['Slope_deg'] + 0.1)
 
     return res
 
@@ -87,13 +93,11 @@ def predict_soil_nutrients(df_input: pd.DataFrame) -> pd.DataFrame:
     
     results = pd.DataFrame(index=df_input.index)
     
-    # Retain spatial coordinates if provided
     for col in ['Latitude', 'Longitude']:
         if col in df_input.columns:
             results[col] = df_input[col]
             
     for t in TARGETS:
-        # 1. Continuous Prediction
         unit = '%' if t == 'OC' else 'kg/ha'
         pred_reg = REG_MODELS[t].predict(X_scaled)
         if t in META["skew_corrected_targets"]:
@@ -101,7 +105,6 @@ def predict_soil_nutrients(df_input: pd.DataFrame) -> pd.DataFrame:
             pred_reg = np.clip(pred_reg, 0, None)
         results[f"Predicted_{t}_{unit}"] = np.round(pred_reg, 2)
         
-        # 2. ICAR Classification & Confidence Score
         if t in CLF_MODELS:
             pred_cat_idx = CLF_MODELS[t].predict(X_scaled)
             pred_probs = CLF_MODELS[t].predict_proba(X_scaled)

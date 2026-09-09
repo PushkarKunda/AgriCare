@@ -125,6 +125,12 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
         res['Spatial_Lon2'] = lon_c ** 2
         res['Spatial_Lat_Lon'] = lat_c * lon_c
 
+    # Soil-Terrain Physical Hydrology
+    if 'Clay_x_Elevation' not in res.columns and all(c in res.columns for c in ['Clay_Fraction_g_kg', 'Elevation_m']):
+        res['Clay_x_Elevation'] = res['Clay_Fraction_g_kg'] * res['Elevation_m']
+    if 'Moisture_div_Slope' not in res.columns and all(c in res.columns for c in ['Soil_Moisture_0_7cm', 'Slope_deg']):
+        res['Moisture_div_Slope'] = res['Soil_Moisture_0_7cm'] / (res['Slope_deg'] + 0.1)
+
     return res
 
 
