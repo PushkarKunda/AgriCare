@@ -1,0 +1,13 @@
+Target,Feature Strategy,Input Dimensions,CV R² Score,RMSE,MAE
+OC,1. All Features (Raw SCORPAN),39,0.2318,0.2001,0.1195
+OC,2. PCA Components (95% Variance),15,0.0901,0.2177,0.1407
+OC,3. Optimal Consensus Subset (Top 9),9,0.2478,0.198,0.1182
+N,1. All Features (Raw SCORPAN),39,0.5455,52.8405,38.4008
+N,2. PCA Components (95% Variance),15,0.4007,60.6808,47.6884
+N,3. Optimal Consensus Subset (Top 9),9,0.5794,50.831,33.7145
+P,1. All Features (Raw SCORPAN),39,0.2434,28.0367,13.0904
+P,2. PCA Components (95% Variance),15,0.1017,30.5479,16.6056
+P,3. Optimal Consensus Subset (Top 9),9,0.2041,28.754,12.0907
+K,1. All Features (Raw SCORPAN),39,0.7005,92.9474,61.1914
+K,2. PCA Components (95% Variance),15,0.4581,125.0302,92.6763
+K,3. Optimal Consensus Subset (Top 7),7,0.7387,86.8229,53.0613

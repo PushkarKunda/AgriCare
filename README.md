@@ -213,3 +213,14 @@ This module extracts, organizes, and verifies direct ground-truth laboratory soi
    - Run `python KML_Files_Extract/getKML.py` to view sampling points in Google Earth Pro.
 5. **Machine Learning Model Training**:
    - Run `python Train_Model/rmse.py` to evaluate PLSR, Ridge, and ElasticNet predictive models.
+6. **Feature Engineering & Dimensionality Reduction**:
+   - Run `python feature_engineering.py` to compute domain-specific spectral indices (BSI, NDVI, SAVI, NDRE, Clay Ratio, Custom OC Index), cyclical aspect transformations, and generate two distinct feature representations:
+     - **Branch A (All Features)**: `engineered_features/X_all_features.csv`
+     - **Branch B (PCA Components $\ge 95\%$ variance)**: `engineered_features/X_pca_features.csv`
+     - Outputs visual figures: `pca_scree_plot.png`, `pca_loadings_heatmap.png`, and `feature_correlation_heatmap.png`.
+7. **Feature Selection & Incremental Ablation Testing**:
+   - Run `python feature_selection_and_ablation.py` to execute:
+     - Supervised Random Forest MDI & SHAP feature importance per nutrient (N, P, K, OC).
+     - Recursive Feature Elimination (RFE) rankings.
+     - Incremental Covariate Grouping ablation curves (grounded in Zayani et al. & Suleymanov et al.).
+     - 3-Paradigm cross-validated performance benchmarking saved in `selection_results/`.
