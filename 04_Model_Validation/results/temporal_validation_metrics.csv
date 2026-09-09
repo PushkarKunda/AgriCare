@@ -1,0 +1,13 @@
+Evaluation_Type,Target,Model,R2_Score,Pearson_r,RMSE,MAE,RPD
+Out-of-Time Test (2025-2026),N,Random Forest,-0.0914,-0.0052,89.0627,69.6269,0.957
+Out-of-Time Test (2025-2026),N,Ridge,-0.0044,0.1152,85.4399,67.2271,0.998
+Out-of-Time Test (2025-2026),N,PLSR,0.0006,0.1221,85.2292,67.1204,1.0
+Out-of-Time Test (2025-2026),P,Random Forest,-0.0427,-0.0555,28.1012,17.7743,0.979
+Out-of-Time Test (2025-2026),P,Ridge,-0.1513,0.0396,29.528,22.9423,0.932
+Out-of-Time Test (2025-2026),P,PLSR,-0.2399,0.0378,30.6437,24.5761,0.898
+Out-of-Time Test (2025-2026),K,Random Forest,-0.234,-0.0009,198.7726,157.2878,0.9
+Out-of-Time Test (2025-2026),K,Ridge,-0.2265,-0.1425,198.1642,155.166,0.903
+Out-of-Time Test (2025-2026),K,PLSR,-0.2072,-0.1375,196.5998,155.3535,0.91
+Out-of-Time Test (2025-2026),OC,Random Forest,-1.2632,-0.0781,0.3468,0.3014,0.665
+Out-of-Time Test (2025-2026),OC,Ridge,-0.6687,-0.0716,0.2978,0.2611,0.774
+Out-of-Time Test (2025-2026),OC,PLSR,-0.8714,-0.0527,0.3154,0.2759,0.731

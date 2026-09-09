@@ -1,0 +1,521 @@
+{
+    "data": {
+        "getdistrictAndSubdistrictBystate": [
+            {
+                "_id": "63f957b089d86ca9e2c00e17",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "ANANTAPUR",
+                "createdAt": "2023-02-25T00:34:57.000Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "502",
+                "prayas": true
+            },
+            {
+                "_id": "63f998b9519359b74389e2e8",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Alluri Sitharama Raju",
+                "createdAt": "2023-02-25T05:12:25.316Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "745",
+                "aspirationaldistrict": true,
+                "prayas": true
+            },
+            {
+                "_id": "63f99834519359b74389d446",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Anakapalli",
+                "createdAt": "2023-02-25T05:10:12.184Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "744",
+                "prayas": true
+            },
+            {
+                "_id": "63f99e46519359b7438a68fb",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Annamayya",
+                "createdAt": "2023-02-25T05:36:06.012Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "753",
+                "prayas": true
+            },
+            {
+                "_id": "63f99c7a519359b7438a472b",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Bapatla",
+                "createdAt": "2023-02-25T05:28:26.004Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "750",
+                "prayas": true
+            },
+            {
+                "_id": "63f9581e89d86ca9e2c01837",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "CHITTOOR",
+                "createdAt": "2023-02-25T00:36:46.864Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "503",
+                "prayas": true
+            },
+            {
+                "_id": "63f9597d89d86ca9e2c0373c",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "EAST GODAVARI",
+                "createdAt": "2023-02-25T00:42:37.608Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "505",
+                "prayas": true
+            },
+            {
+                "_id": "63f99b90519359b7438a32fc",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Eluru",
+                "createdAt": "2023-02-25T05:24:32.946Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "748",
+                "prayas": true
+            },
+            {
+                "_id": "63f959ba89d86ca9e2c03cd7",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "GUNTUR",
+                "createdAt": "2023-02-25T00:43:38.557Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "506",
+                "prayas": true
+            },
+            {
+                "_id": "63f959ed89d86ca9e2c04153",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "KRISHNA",
+                "createdAt": "2023-02-25T00:44:29.499Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "510",
+                "prayas": true
+            },
+            {
+                "_id": "63f95a5e89d86ca9e2c04b6e",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "KURNOOL",
+                "createdAt": "2023-02-25T00:46:22.180Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "511",
+                "prayas": true
+            },
+            {
+                "_id": "63f99b06519359b7438a23bd",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Kakinada",
+                "createdAt": "2023-02-25T05:22:14.931Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "746",
+                "prayas": true
+            },
+            {
+                "_id": "63f99b56519359b7438a2c6b",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Konaseema",
+                "createdAt": "2023-02-25T05:23:34.079Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "747",
+                "prayas": true
+            },
+            {
+                "_id": "69d3857f8fbcd4f0c62e7595",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Markapuram",
+                "code": "790",
+                "details": {
+                    "createdBy": "633493da253e48b06298cecf"
+                },
+                "aspirationaldistrict": false,
+                "createdAt": "2026-04-06T10:05:51.872Z",
+                "updatedAt": "2026-04-06T10:05:51.872Z",
+                "__v": 0,
+                "prayas": true
+            },
+            {
+                "_id": "63f99c24519359b7438a40b8",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "NTR",
+                "createdAt": "2023-02-25T05:27:00.339Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "749",
+                "prayas": true
+            },
+            {
+                "_id": "63f99f42519359b7438a7ba6",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Nandyal",
+                "createdAt": "2023-02-25T05:40:18.848Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "755",
+                "prayas": true
+            },
+            {
+                "_id": "63f95b6789d86ca9e2c0638e",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "PRAKASAM",
+                "createdAt": "2023-02-25T00:50:47.436Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "517",
+                "prayas": true
+            },
+            {
+                "_id": "63f99cc7519359b7438a4cd5",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Palnadu",
+                "createdAt": "2023-02-25T05:29:43.091Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "751",
+                "prayas": true
+            },
+            {
+                "_id": "63f99781519359b74389c145",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Parvathipuram Manyam",
+                "createdAt": "2023-02-25T05:07:13.964Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "743",
+                "aspirationaldistrict": true,
+                "prayas": true
+            },
+            {
+                "_id": "69d3858a8fbcd4f0c62e759b",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Polavaram",
+                "code": "791",
+                "details": {
+                    "createdBy": "633493da253e48b06298cecf"
+                },
+                "aspirationaldistrict": false,
+                "createdAt": "2026-04-06T10:06:02.497Z",
+                "updatedAt": "2026-04-06T10:06:02.497Z",
+                "__v": 0,
+                "prayas": true
+            },
+            {
+                "_id": "63f95ac489d86ca9e2c054da",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "SPSR NELLORE",
+                "createdAt": "2023-02-25T00:48:04.199Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "515",
+                "prayas": true
+            },
+            {
+                "_id": "63f95c2189d86ca9e2c074d0",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "SRIKAKULAM",
+                "createdAt": "2023-02-25T00:53:53.483Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "519",
+                "prayas": true
+            },
+            {
+                "_id": "63f99ec4519359b7438a7265",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Sri Sathya Sai",
+                "createdAt": "2023-02-25T05:38:12.586Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "754",
+                "prayas": true
+            },
+            {
+                "_id": "63f99d29519359b7438a5425",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Tirupati",
+                "createdAt": "2023-02-25T05:31:21.590Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "752",
+                "prayas": true
+            },
+            {
+                "_id": "63f95d5b89d86ca9e2c091ce",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "VISAKHAPATANAM",
+                "createdAt": "2023-02-25T00:59:07.919Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "520",
+                "prayas": true
+            },
+            {
+                "_id": "63f95d8089d86ca9e2c0951f",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "VIZIANAGARAM",
+                "createdAt": "2023-02-25T00:59:44.260Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "521",
+                "prayas": true
+            },
+            {
+                "_id": "63f9974a519359b74389bb5f",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "WEST GODAVARI",
+                "createdAt": "2023-02-25T05:06:18.151Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "523",
+                "prayas": true
+            },
+            {
+                "_id": "63f958da89d86ca9e2c0289e",
+                "state": {
+                    "_id": "63f957b089d86ca9e2c00e14",
+                    "name": "ANDHRA PRADESH",
+                    "createdAt": "2023-02-25T00:34:56.898Z",
+                    "updatedAt": "2023-02-25T00:34:56.898Z",
+                    "__v": 0,
+                    "code": "28",
+                    "id": "63f957b089d86ca9e2c00e14"
+                },
+                "name": "Y.S.R.",
+                "createdAt": "2023-02-25T00:39:54.608Z",
+                "updatedAt": "2026-01-06T07:15:19.701Z",
+                "__v": 0,
+                "code": "504",
+                "aspirationaldistrict": true,
+                "prayas": true
+            }
+        ]
+    }
+}
