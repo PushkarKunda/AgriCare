@@ -1,0 +1,4 @@
+Feature Strategy,Input Dimensions,CV R² Score,RMSE,MAE
+1. All Features (Raw SCORPAN),39,0.2434,28.0367,13.0904
+2. PCA Components (95% Variance),15,0.1017,30.5479,16.6056
+3. Optimal Consensus Subset (Top 9),9,0.2041,28.754,12.0907

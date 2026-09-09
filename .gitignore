@@ -1,17 +1,34 @@
+<<<<<<< HEAD
 # ==============================================================================
 # Git Ignore Rules - AgriCare Digital Soil Mapping Project
 # ==============================================================================
 
+=======
+>>>>>>> c89b9421ff433c75c4853101871013a8d0be48cd
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+<<<<<<< HEAD
 *.so
 
 # C-extensions
 *.pyd
 
 # Distribution / packaging
+=======
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+.Python
+>>>>>>> c89b9421ff433c75c4853101871013a8d0be48cd
 build/
 develop-eggs/
 dist/
@@ -28,6 +45,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+<<<<<<< HEAD
 
 # Virtual Environments
 venv/
@@ -71,3 +89,30 @@ tmp/
 # Intermediate CLI Prediction Exports
 *_predictions.csv
 *_forecast_advisory.csv
+=======
+MANIFEST
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Scratch and temp
+temp_agricare/
+*.log
+
+# Local raw photos and scans
+Soil health card sector blue/
+Soil health card sector blue.zip
+WhatsApp Image*.jpeg
+
+>>>>>>> c89b9421ff433c75c4853101871013a8d0be48cd
