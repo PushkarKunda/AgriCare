@@ -1,0 +1,6 @@
+Stage,Num_Features,R2_Score,RMSE,MAE
+1. Spectral Bands,12,0.036,0.2241,0.1496
+2. + Spectral Indices,20,0.0619,0.2211,0.1443
+3. + Topography,27,0.1223,0.2138,0.1414
+4. + Climate,34,0.2222,0.2013,0.1259
+5. Full SCORPAN (All),39,0.2166,0.202,0.1228
